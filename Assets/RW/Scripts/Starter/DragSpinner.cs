@@ -135,7 +135,7 @@ namespace RW.MonumentValley
             RoundToRightAngles(targetToSpin);
 
             // don't like referencing this directly but not using separate game Events to save on word count
-            linker?.UpdateLinks();
+            linker?.UpdateRotationLinks();
 
         }
 
@@ -147,7 +147,7 @@ namespace RW.MonumentValley
             RoundToRightAngles(targetToSpin);
 
             // don't like referencing this directly but not using separate game Events to save on word count
-            linker?.UpdateLinks();
+            linker?.UpdateRotationLinks();
         }
 
         // round to nearest 90 degrees
