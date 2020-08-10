@@ -36,20 +36,44 @@ using UnityEngine.Events;
 
 namespace RW.MonumentValley
 {
+    // class to activate/deactivate special edges between Nodes based on rotation
+    [System.Serializable]
+    public class RotationLink
+    {
+        public Node nodeA;
+        public Node nodeB;
+
+        // transform to check
+        public Transform xform;
+
+        // euler angle needed to activate link
+        public Vector3 activeEulerAngle;
+
+    }
+
     // activates or deactivates special Edges between Nodes
     public class Linker : MonoBehaviour
     {
-        [SerializeField] public Link[] links;
+        [SerializeField] public RotationLink[] links;
 
-        private void Start()
+
+
+        // toggle active state between Neighbor nodes
+        public void EnableLink(Node nodeA, Node nodeB, bool state)
         {
-            UpdateLinks();
+            if (nodeA == null || nodeB == null)
+                return;
+
+            nodeA.EnableEdge(nodeB, state);
+            nodeB.EnableEdge(nodeA, state);
         }
 
+
+
         // enable/disable based on transform's euler angles
-        public void UpdateLinks()
+        public void UpdateRotationLinks()
         {
-            foreach (Link l in links)
+            foreach (RotationLink l in links)
             {
                 // check difference between desired and current angle
                 Quaternion targetAngle = Quaternion.Euler(l.activeEulerAngle);
@@ -66,29 +90,12 @@ namespace RW.MonumentValley
             }
         }
 
-        // toggle active state between Neighbor nodes
-        public void EnableLink(Node nodeA, Node nodeB, bool state)
+        private void Start()
         {
-            if (nodeA == null || nodeB == null)
-                return;
-
-            nodeA.EnableEdge(nodeB, state);
-            nodeB.EnableEdge(nodeA, state);
+            UpdateRotationLinks();
         }
-    }
-
-    // class to activate/deactivate special edges between Nodes based on rotation
-    [System.Serializable]
-    public class Link
-    {
-        public Node nodeA;
-        public Node nodeB;
-
-        // transform to check
-        public Transform xform;
-
-        // euler angle needed to activate link
-        public Vector3 activeEulerAngle;
 
     }
+
+
 }
