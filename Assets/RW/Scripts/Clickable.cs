@@ -40,41 +40,41 @@ namespace RW.MonumentValley
     [RequireComponent(typeof(Collider))]
     public class Clickable : MonoBehaviour
     {
-        // Nodes under this Transform
-        private Node[] childNodes;
+        //// Nodes under this Transform
+        //private Node[] childNodes;
 
-        // reference to Graph
-        private Graph graph;
+        //// reference to Graph
+        //private Graph graph;
 
-        // invoked when collider is clicked
-        public Action<Node> clickAction;
+        //// invoked when collider is clicked
+        //public Action<Node> clickAction;
 
-        private void Start()
-        {
-            childNodes = GetComponentsInChildren<Node>();
-            graph = FindObjectOfType<Graph>();
-        }
+        //private void Start()
+        //{
+        //    childNodes = GetComponentsInChildren<Node>();
+        //    graph = FindObjectOfType<Graph>();
+        //}
 
-        private void OnMouseDown()
-        {
-            // validate components
-            if (graph == null)
-            {
-                return;
-            }
+        //private void OnMouseDown()
+        //{
+        //    // validate components
+        //    if (graph == null)
+        //    {
+        //        return;
+        //    }
 
-            // raycast and find the path to the closest node
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    // raycast and find the path to the closest node
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100))
-            {
-                // find the closest Node in Screen space
-                Node clickedNode = graph.FindClosestNode(childNodes, hit.point);
+        //    if (Physics.Raycast(ray, out RaycastHit hit, 100))
+        //    {
+        //        // find the closest Node in Screen space
+        //        Node clickedNode = graph.FindClosestNode(childNodes, hit.point);
 
-                // trigger event clickable event
-                clickAction?.Invoke(clickedNode);
+        //        // trigger event clickable event
+        //        clickAction?.Invoke(clickedNode);
 
-            }
-        }
+        //    }
+        //}
     }
 }

@@ -36,66 +36,60 @@ using UnityEngine.Events;
 
 namespace RW.MonumentValley
 {
-    // class to activate/deactivate special edges between Nodes based on rotation
-    [System.Serializable]
-    public class RotationLink
-    {
-        public Node nodeA;
-        public Node nodeB;
+    //// class to activate/deactivate special edges between Nodes based on rotation
+    //[System.Serializable]
+    //public class RotationLink
+    //{
+    //    public Node nodeA;
+    //    public Node nodeB;
 
-        // transform to check
-        public Transform xform;
+    //    // transform to check
+    //    public Transform xform;
 
-        // euler angle needed to activate link
-        public Vector3 activeEulerAngle;
+    //    // euler angle needed to activate link
+    //    public Vector3 activeEulerAngle;
 
-    }
+    //}
 
-    // activates or deactivates special Edges between Nodes
-    public class Linker : MonoBehaviour
-    {
-        [SerializeField] public RotationLink[] links;
+    //// activates or deactivates special Edges between Nodes
+    //public class Linker : MonoBehaviour
+    //{
+    //    [SerializeField] public RotationLink[] links;
 
+    //    // toggle active state between Neighbor nodes
+    //    public void EnableLink(Node nodeA, Node nodeB, bool state)
+    //    {
+    //        if (nodeA == null || nodeB == null)
+    //            return;
 
-
-        // toggle active state between Neighbor nodes
-        public void EnableLink(Node nodeA, Node nodeB, bool state)
-        {
-            if (nodeA == null || nodeB == null)
-                return;
-
-            nodeA.EnableEdge(nodeB, state);
-            nodeB.EnableEdge(nodeA, state);
-        }
+    //        nodeA.EnableEdge(nodeB, state);
+    //        nodeB.EnableEdge(nodeA, state);
+    //    }
 
 
+    //    // enable/disable based on transform's euler angles
+    //    public void UpdateRotationLinks()
+    //    {
+    //        foreach (RotationLink l in links)
+    //        {
+    //            // check difference between desired and current angle
+    //            Quaternion targetAngle = Quaternion.Euler(l.activeEulerAngle);
+    //            float angleDiff = Quaternion.Angle(l.xform.rotation, targetAngle);
 
-        // enable/disable based on transform's euler angles
-        public void UpdateRotationLinks()
-        {
-            foreach (RotationLink l in links)
-            {
-                // check difference between desired and current angle
-                Quaternion targetAngle = Quaternion.Euler(l.activeEulerAngle);
-                float angleDiff = Quaternion.Angle(l.xform.rotation, targetAngle);
+    //            if (Mathf.Abs(angleDiff) < 0.01f)
+    //            {
+    //                EnableLink(l.nodeA, l.nodeB, true);
+    //            }
+    //            else
+    //            {
+    //                EnableLink(l.nodeA, l.nodeB, false);
+    //            }
+    //        }
+    //    }
 
-                if (Mathf.Abs(angleDiff) < 0.01f)
-                {
-                    EnableLink(l.nodeA, l.nodeB, true);
-                }
-                else
-                {
-                    EnableLink(l.nodeA, l.nodeB, false);
-                }
-            }
-        }
-
-        private void Start()
-        {
-            UpdateRotationLinks();
-        }
-
-    }
-
-
+    //    private void Start()
+    //    {
+    //        UpdateRotationLinks();
+    //    }
+    //}
 }

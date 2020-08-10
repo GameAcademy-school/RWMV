@@ -71,48 +71,48 @@ namespace RW.MonumentValley
 
         private void Update()
         {
-            if (playerController != null && playerController.HasReachedGoal())
-            {
-                Win();
-            }
+            //if (playerController != null && playerController.HasReachedGoal())
+            //{
+            //    Win();
+            //}
         }
 
-        private void Win()
-        {
-            // flag to ensure Win only triggers once
-            if (isGameOver)
-            {
-                return;
-            }
-            isGameOver = true;
+        //private void Win()
+        //{
+        //    // flag to ensure Win only triggers once
+        //    if (isGameOver)
+        //    {
+        //        return;
+        //    }
+        //    isGameOver = true;
 
-            // disable player controls
-            playerController?.EndGame();
+        //    // disable player controls
+        //    //playerController?.EndGame();
 
-            // play win animation
-            StartCoroutine(WinRoutine());
-        }
+        //    // play win animation
+        //    StartCoroutine(WinRoutine());
+        //}
 
-        private IEnumerator WinRoutine()
-        {
-            restartEvent?.Invoke();
+        //private IEnumerator WinRoutine()
+        //{
+        //    restartEvent?.Invoke();
 
-            // yield Animation time
-            yield return new WaitForSeconds(2f);
+        //    // yield Animation time
+        //    yield return new WaitForSeconds(2f);
 
-        }
+        //}
 
-        public void Restart(float delay)
-        {
-            StartCoroutine(RestartRoutine(delay));
-        }
+        //public void Restart(float delay)
+        //{
+        //    StartCoroutine(RestartRoutine(delay));
+        //}
 
-        private IEnumerator RestartRoutine(float delay)
-        {
-            yield return new WaitForSeconds(delay);
+        //private IEnumerator RestartRoutine(float delay)
+        //{
+        //    yield return new WaitForSeconds(delay);
 
-            Scene activeScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(activeScene.buildIndex);
-        }
+        //    Scene activeScene = SceneManager.GetActiveScene();
+        //    SceneManager.LoadScene(activeScene.buildIndex);
+        //}
     }
 }

@@ -56,7 +56,7 @@ namespace RW.MonumentValley
         // minimum distance in pixels before activating mouse drag
         [SerializeField] private int minDragDist = 10;
 
-        [SerializeField] private Linker linker;
+        //[SerializeField] private Linker linker;
 
         // vector from pivot to mouse pointer
         private Vector2 directionToMouse;
@@ -126,17 +126,8 @@ namespace RW.MonumentValley
         // end spin on mouse release; then round to right angle
         private void OnMouseUp()
         {
-            if (!isActive)
-                return;
-
-            isSpinning = false;
-
-            // snap to nearest 90-degree interval
-            RoundToRightAngles(targetToSpin);
-
-            // don't like referencing this directly but not using separate game Events to save on word count
-            linker?.UpdateRotationLinks();
-
+            if (isActive)
+                SnapSpinner();
         }
 
         private void SnapSpinner()
@@ -147,7 +138,7 @@ namespace RW.MonumentValley
             RoundToRightAngles(targetToSpin);
 
             // don't like referencing this directly but not using separate game Events to save on word count
-            linker?.UpdateRotationLinks();
+            //linker?.UpdateRotationLinks();
         }
 
         // round to nearest 90 degrees
@@ -164,6 +155,7 @@ namespace RW.MonumentValley
         {
             isActive = state;
 
+            // force snap the spinner on disable
             if (!isActive)
             {
                 SnapSpinner();

@@ -39,230 +39,229 @@ namespace RW.MonumentValley
     public class PlayerController : MonoBehaviour
     {
 
-        // time to move one unit
-        [Range(0.25f, 2f)]
-        [SerializeField] private float moveTime = 0.25f;
+        //    // time to move one unit
+        //    [Range(0.25f, 2f)]
+        //    [SerializeField] private float moveTime = 0.25f;
 
-        // multiplier for walk AnimationClip
-        [Range(0.5f, 3f)]
-        [SerializeField] private float walkAnimSpeed = 1f;
+        //    // multiplier for walk AnimationClip
+        //    [Range(0.5f, 3f)]
+        //    [SerializeField] private float walkAnimSpeed = 1f;
 
-        // player Animator Controller
-        [SerializeField] private Animator animController;
+        //    // player Animator Controller
+        //    [SerializeField] private Animator animController;
 
-        // click indicator
-        [SerializeField] Cursor cursor;
+        //    // click indicator
+        //    [SerializeField] Cursor cursor;
 
-        // cursor AnimationController
-        private Animator cursorAnimController;
+        //    // cursor AnimationController
+        //    private Animator cursorAnimController;
 
-        // pathfinding fields
-        private Clickable[] clickables;
-        private Pathfinder pathfinder;
-        private Graph graph;
-        private Node currentNode;
-        private Node nextNode;
-        //private bool hasReachedDestination;
+        //    // pathfinding fields
+        //    private Clickable[] clickables;
+        //    private Pathfinder pathfinder;
+        //    private Graph graph;
+        //    private Node currentNode;
+        //    private Node nextNode;
+        //    //private bool hasReachedDestination;
 
-        // flags
-        private bool isMoving;
-        private bool isGameOver;
+        //    // flags
+        //    private bool isMoving;
+        //    private bool isGameOver;
 
-        private void Awake()
-        {
-            // listen to each clickable's clickEvent
-            clickables = FindObjectsOfType<Clickable>();
-            pathfinder = FindObjectOfType<Pathfinder>();
+        //    private void Awake()
+        //    {
+        //        // listen to each clickable's clickEvent
+        //        clickables = FindObjectsOfType<Clickable>();
+        //        pathfinder = FindObjectOfType<Pathfinder>();
 
-            foreach (Clickable c in clickables)
-            {
-                c.clickAction += OnClick;
-            }
+        //        foreach (Clickable c in clickables)
+        //        {
+        //            c.clickAction += OnClick;
+        //        }
 
-            // initialize fields
-            if (pathfinder != null)
-            {
-                graph = pathfinder.GetComponent<Graph>();
-            }
+        //        // initialize fields
+        //        if (pathfinder != null)
+        //        {
+        //            graph = pathfinder.GetComponent<Graph>();
+        //        }
 
-            isMoving = false;
-            isGameOver = false;
-        }
+        //        isMoving = false;
+        //        isGameOver = false;
+        //    }
 
-        private void Start()
-        {
+        //    private void Start()
+        //    {
 
-            // set AnimationClip speed
-            animController?.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
+        //        // set AnimationClip speed
+        //        animController?.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
 
-            // always start on a Node
-            SnapToNearestNode();
-            pathfinder?.SetStartNode(transform.position);
-        }
+        //        // always start on a Node
+        //        SnapToNearestNode();
+        //        pathfinder?.SetStartNode(transform.position);
+        //    }
 
-        private void OnDisable()
-        {
-            // unsubscribe to each clickable's clickEvent
-            foreach (Clickable c in clickables)
-            {
-                c.clickAction -= OnClick;
-            }
-        }
+        //    private void OnDisable()
+        //    {
+        //        // unsubscribe to each clickable's clickEvent
+        //        foreach (Clickable c in clickables)
+        //        {
+        //            c.clickAction -= OnClick;
+        //        }
+        //    }
 
-        private void OnClick(Node clickedNode)
-        {
+        //    private void OnClick(Node clickedNode)
+        //    {
 
-            if (isGameOver || clickedNode == null)
-                return;
+        //        if (isGameOver || clickedNode == null)
+        //            return;
 
 
-            pathfinder?.FindPath(currentNode, clickedNode);
-            List<Node> newPath = pathfinder?.PathNodes;
+        //        pathfinder?.FindPath(currentNode, clickedNode);
+        //        List<Node> newPath = pathfinder?.PathNodes;
 
-            if (isMoving)
-            {
-                StopAllCoroutines();
-            }
+        //        if (isMoving)
+        //        {
+        //            StopAllCoroutines();
+        //        }
 
-            cursor?.ShowCursor(clickedNode.transform.position);
+        //        cursor?.ShowCursor(clickedNode.transform.position);
 
-            // evaluate if we have a valid path to clickedNode and follow
-            if (newPath.Count > 1 && newPath[newPath.Count - 1] == clickedNode)
-            {
-                StartCoroutine(FollowPathRoutine(newPath));
-            }
-            else
-            {
-                Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
-            }
-        }
+        //        // evaluate if we have a valid path to clickedNode and follow
+        //        if (newPath.Count > 1 && newPath[newPath.Count - 1] == clickedNode)
+        //        {
+        //            StartCoroutine(FollowPathRoutine(newPath));
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
+        //        }
+        //    }
 
-        private IEnumerator FollowPathRoutine(List<Node> path)
-        {
+        //    private IEnumerator FollowPathRoutine(List<Node> path)
+        //    {
 
-            isMoving = true;
-            //hasReachedDestination = false;
+        //        isMoving = true;
+        //        //hasReachedDestination = false;
 
-            if (path == null || path.Count <= 1)
-            {
-                Debug.Log("PLAYERCONTROLLER FollowPathRoutine: invalid path");
-            }
-            else
-            {
-                ToggleAnimation(isMoving);
+        //        if (path == null || path.Count <= 1)
+        //        {
+        //            Debug.Log("PLAYERCONTROLLER FollowPathRoutine: invalid path");
+        //        }
+        //        else
+        //        {
+        //            ToggleAnimation(isMoving);
 
-                // loop through all Nodes
-                for (int i = 0; i < path.Count; i++)
-                {
-                    // rotate and move to next Node
-                    nextNode = path[i];
-                    FaceNextNode(transform.position, nextNode.transform.position);
-                    yield return StartCoroutine(MoveToNodeRoutine(transform.position, nextNode));
-                }
-            }
+        //            // loop through all Nodes
+        //            for (int i = 0; i < path.Count; i++)
+        //            {
+        //                // rotate and move to next Node
+        //                nextNode = path[i];
+        //                FaceNextNode(transform.position, nextNode.transform.position);
+        //                yield return StartCoroutine(MoveToNodeRoutine(transform.position, nextNode));
+        //            }
+        //        }
 
-            isMoving = false;
-            ToggleAnimation(isMoving);
-            pathfinder?.ClearPath();
-        }
+        //        isMoving = false;
+        //        ToggleAnimation(isMoving);
+        //        pathfinder?.ClearPath();
+        //    }
 
-        // lerp to another Node from current position
-        private IEnumerator MoveToNodeRoutine(Vector3 startPosition, Node targetNode)
-        {
+        //    // lerp to another Node from current position
+        //    private IEnumerator MoveToNodeRoutine(Vector3 startPosition, Node targetNode)
+        //    {
 
-            float elapsedTime = 0;
+        //        float elapsedTime = 0;
 
-            // validate move time
-            moveTime = Mathf.Clamp(moveTime, 0.1f, 5f);
+        //        // validate move time
+        //        moveTime = Mathf.Clamp(moveTime, 0.1f, 5f);
 
-            while (elapsedTime < moveTime && targetNode != null)
-            {
+        //        while (elapsedTime < moveTime && targetNode != null)
+        //        {
 
-                elapsedTime += Time.deltaTime;
-                float lerpValue = Mathf.Clamp(elapsedTime / moveTime, 0f, 1f);
+        //            elapsedTime += Time.deltaTime;
+        //            float lerpValue = Mathf.Clamp(elapsedTime / moveTime, 0f, 1f);
 
-                Vector3 targetPos = targetNode.transform.position;
-                transform.position = Vector3.Lerp(startPosition, targetPos, lerpValue);
+        //            Vector3 targetPos = targetNode.transform.position;
+        //            transform.position = Vector3.Lerp(startPosition, targetPos, lerpValue);
 
-                // if over halfway, change parent to next node
-                if (lerpValue > 0.51f)
-                {
-                    transform.parent = targetNode.transform;
-                    currentNode = targetNode;
+        //            // if over halfway, change parent to next node
+        //            if (lerpValue > 0.51f)
+        //            {
+        //                transform.parent = targetNode.transform;
+        //                currentNode = targetNode;
 
-                    // invoke UnityEvent associated with next Node
-                    targetNode.playerEvent?.Invoke();
-                }
+        //                // invoke UnityEvent associated with next Node
+        //                targetNode.playerEvent?.Invoke();
+        //            }
 
-                // wait one frame
-                yield return null;
-            }
-        }
+        //            // wait one frame
+        //            yield return null;
+        //        }
+        //    }
 
-        // snap the Player to the nearest Node in Game view
-        public void SnapToNearestNode()
-        {
-            Node nearestNode = graph?.FindClosestNode(transform.position);
-            if (nearestNode != null)
-            {
-                currentNode = nearestNode;
-                transform.position = nearestNode.transform.position;
-            }
-        }
+        //    // snap the Player to the nearest Node in Game view
+        //    public void SnapToNearestNode()
+        //    {
+        //        Node nearestNode = graph?.FindClosestNode(transform.position);
+        //        if (nearestNode != null)
+        //        {
+        //            currentNode = nearestNode;
+        //            transform.position = nearestNode.transform.position;
+        //        }
+        //    }
 
-        // turn face the next Node, always projected on a plane at the Player's feet
-        public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
-        {
-            if (Camera.main == null)
-            {
-                return;
-            }
+        //    // turn face the next Node, always projected on a plane at the Player's feet
+        //    public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
+        //    {
+        //        if (Camera.main == null)
+        //        {
+        //            return;
+        //        }
 
-            // convert next Node world space to screen space
-            Vector3 nextPositionScreen = Camera.main.WorldToScreenPoint(nextPosition);
+        //        // convert next Node world space to screen space
+        //        Vector3 nextPositionScreen = Camera.main.WorldToScreenPoint(nextPosition);
 
-            // convert next Node screen point to Ray
-            Ray rayToNextPosition = Camera.main.ScreenPointToRay(nextPositionScreen);
+        //        // convert next Node screen point to Ray
+        //        Ray rayToNextPosition = Camera.main.ScreenPointToRay(nextPositionScreen);
 
-            // plane at player's feet
-            Plane plane = new Plane(Vector3.up, startPosition);
+        //        // plane at player's feet
+        //        Plane plane = new Plane(Vector3.up, startPosition);
 
-            // distance from camera
-            float cameraDistance = 0f;
+        //        // distance from camera
+        //        float cameraDistance = 0f;
 
-            // project the nextNode onto the plane and face toward projected point
-            if (plane.Raycast(rayToNextPosition, out cameraDistance))
-            {
-                Vector3 nextPositionOnPlane = rayToNextPosition.GetPoint(cameraDistance);
-                Vector3 directionToNextNode = nextPositionOnPlane - startPosition;
-                if (directionToNextNode != Vector3.zero)
-                {
-                    transform.rotation = Quaternion.LookRotation(directionToNextNode);
-                }
-                
-            }
-        }
+        //        // project the nextNode onto the plane and face toward projected point
+        //        if (plane.Raycast(rayToNextPosition, out cameraDistance))
+        //        {
+        //            Vector3 nextPositionOnPlane = rayToNextPosition.GetPoint(cameraDistance);
+        //            Vector3 directionToNextNode = nextPositionOnPlane - startPosition;
+        //            if (directionToNextNode != Vector3.zero)
+        //            {
+        //                transform.rotation = Quaternion.LookRotation(directionToNextNode);
+        //            }
 
-        // toggle between idle and walking animation
-        private void ToggleAnimation(bool state)
-        {
-            animController?.SetBool("isMoving", state);
-        }
+        //        }
+        //    }
 
-        public bool HasReachedGoal()
-        {
-            if (pathfinder == null || graph == null || graph.GoalNode == null)
-                return false;
+        //    // toggle between idle and walking animation
+        //    private void ToggleAnimation(bool state)
+        //    {
+        //        animController?.SetBool("isMoving", state);
+        //    }
 
-            float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
+        //    public bool HasReachedGoal()
+        //    {
+        //        if (pathfinder == null || graph == null || graph.GoalNode == null)
+        //            return false;
 
-            return (distanceSqr < 0.01f);
-        }
+        //        float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
 
-        // disable controls
-        public void EndGame()
-        {
-            isGameOver = true;
-        }
+        //        return (distanceSqr < 0.01f);
+        //    }
+
+        //    // disable controls
+        //    public void EndGame()
+        //    {
+        //        isGameOver = true;
     }
 }
