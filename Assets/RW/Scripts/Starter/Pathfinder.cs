@@ -40,10 +40,11 @@ namespace RW.MonumentValley
     {
 
         // path start Node (usually current Node of the Player)
-        private Node startNode;
+        [SerializeField] private Node startNode;
 
         // path end Node
-        private Node destinationNode;
+        [SerializeField] private Node destinationNode;
+        [SerializeField] private bool searchOnStart;
 
         // next Nodes to explore
         private List<Node> frontierNodes;
@@ -72,6 +73,12 @@ namespace RW.MonumentValley
         private void Awake()
         {
             graph = GetComponent<Graph>();
+        }
+
+        private void Start()
+        {
+            if (searchOnStart)
+                FindPath();
         }
 
         // initialize all Nodes/lists
@@ -235,18 +242,24 @@ namespace RW.MonumentValley
             {
                 foreach (Node node in pathNodes)
                 {
-                    if (node == destinationNode || node == startNode)
+
+                    if (node == startNode)
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawCube(node.transform.position, new Vector3(0.25f, 0.25f, 0.25f));
+                    }
+                    else if (node == destinationNode)
                     {
                         Gizmos.color = Color.red;
                         Gizmos.DrawCube(node.transform.position, new Vector3(0.25f, 0.25f, 0.25f));
                     }
                     else
                     {
-                        Gizmos.color = Color.green;
+                        Gizmos.color = Color.blue;
                         Gizmos.DrawSphere(node.transform.position, 0.15f);
                     }
 
-                    Gizmos.color = Color.red;
+                    Gizmos.color = Color.yellow;
                     if (node.PreviousNode != null)
                     {
                         Gizmos.DrawLine(node.transform.position, node.PreviousNode.transform.position);
