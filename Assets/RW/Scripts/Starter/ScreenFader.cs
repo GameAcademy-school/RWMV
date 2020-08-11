@@ -60,7 +60,7 @@ namespace RW.MonumentValley
             {
                 yield return null;
             }
-            graphic.gameObject.SetActive(false);
+            graphic?.gameObject.SetActive(false);
 
         }
 
@@ -68,7 +68,7 @@ namespace RW.MonumentValley
         {
             foreach (MaskableGraphic image in images)
             {
-                image.gameObject.SetActive(true);
+                image?.gameObject.SetActive(true);
                 image?.CrossFadeAlpha(0f, .01f, true);
                 image?.CrossFadeAlpha(1f, fadeOnTime, true);
             }

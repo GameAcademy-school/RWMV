@@ -57,12 +57,12 @@ namespace RW.MonumentValley
         //    private Animator cursorAnimController;
 
         //    // pathfinding fields
-        //    private Clickable[] clickables;
-        //    private Pathfinder pathfinder;
-        //    private Graph graph;
-        //    private Node currentNode;
-        //    private Node nextNode;
-        //    //private bool hasReachedDestination;
+        private Clickable[] clickables;
+        private Pathfinder pathfinder;
+        private Graph graph;
+        private Node currentNode;
+        private Node nextNode;
+        private bool hasReachedDestination;
 
         //    // flags
         //    private bool isMoving;

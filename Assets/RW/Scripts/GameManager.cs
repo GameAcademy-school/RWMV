@@ -45,9 +45,11 @@ namespace RW.MonumentValley
         private bool isGameOver;
         public bool IsGameOver => isGameOver;
 
-        [SerializeField] Canvas UICanvas;
-        [SerializeField] ScreenFader screenFader;
-        [SerializeField] ScreenFader winText;
+        [SerializeField] private Canvas UICanvas;
+        //[SerializeField] ScreenFader screenFader;
+        //[SerializeField] ScreenFader winText;
+
+        public float delayTime = 2f;
 
         // invoked when starting the level
         public UnityEvent initEvent;
@@ -55,17 +57,21 @@ namespace RW.MonumentValley
         // invoked before restarting the level
         public UnityEvent restartEvent;
 
-        public float delayTime = 2f;
 
         private void Awake()
         {
+
+            if (UICanvas != null)
+            {
+                UICanvas.gameObject.SetActive(true);
+            }
+
             playerController = FindObjectOfType<PlayerController>();
-            UICanvas?.gameObject.SetActive(true);
+
         }
 
         private void Start()
         {
-            screenFader?.FadeOff(delayTime);
             initEvent.Invoke();
         }
 
@@ -87,32 +93,32 @@ namespace RW.MonumentValley
         //    isGameOver = true;
 
         //    // disable player controls
-        //    //playerController?.EndGame();
+        //    playerController?.EndGame();
 
         //    // play win animation
         //    StartCoroutine(WinRoutine());
         //}
 
-        //private IEnumerator WinRoutine()
-        //{
-        //    restartEvent?.Invoke();
+        private IEnumerator WinRoutine()
+        {
+            restartEvent?.Invoke();
 
-        //    // yield Animation time
-        //    yield return new WaitForSeconds(2f);
+            // yield Animation time
+            yield return new WaitForSeconds(delayTime);
 
-        //}
+        }
 
-        //public void Restart(float delay)
-        //{
-        //    StartCoroutine(RestartRoutine(delay));
-        //}
+        public void Restart(float delay)
+        {
+            StartCoroutine(RestartRoutine(delay));
+        }
 
-        //private IEnumerator RestartRoutine(float delay)
-        //{
-        //    yield return new WaitForSeconds(delay);
+        private IEnumerator RestartRoutine(float delay)
+        {
+            yield return new WaitForSeconds(delay);
 
-        //    Scene activeScene = SceneManager.GetActiveScene();
-        //    SceneManager.LoadScene(activeScene.buildIndex);
-        //}
+            Scene activeScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(activeScene.buildIndex);
+        }
     }
 }
