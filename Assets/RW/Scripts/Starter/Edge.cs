@@ -35,8 +35,8 @@ namespace RW.MonumentValley
     public class Edge
     {
         // Tutorial Start3
-        //public Node neighbor;
-        //public bool isActive;
+        public Node neighbor;
+        public bool isActive;
     }
 
 }
