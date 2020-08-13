@@ -102,13 +102,10 @@ namespace RW.MonumentValley
                 return;
             }
 
+            // find the best path to the any Nodes under the Clickable; gives the user some flexibility
+            List<Node> newPath = pathfinder.FindBestPath(currentNode, clickable.ChildNodes);
 
-            Node clickedNode = graph.FindClosestNode(clickable.ChildNodes, position);
-
-            pathfinder.FindPath(currentNode, clickedNode);
-
-            List<Node> newPath = pathfinder.PathNodes;
-
+            // if we are already moving and we click again, stop all previous Animation/motion
             if (isMoving)
             {
                 StopAllCoroutines();
@@ -116,15 +113,9 @@ namespace RW.MonumentValley
 
             //    //cursor?.ShowCursor(clickedNode.transform.position);
 
-            if (newPath.Count > 1 && newPath[newPath.Count - 1] == clickedNode)
+            if (newPath.Count > 1)
             {
                 StartCoroutine(FollowPathRoutine(newPath));
-            }
-            else
-            {
-                Debug.Log("clicked Node = " + clickedNode.name);
-                Debug.Log("new path count = " + newPath.Count);
-                Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
             }
         }
 
@@ -154,10 +145,13 @@ namespace RW.MonumentValley
                 // loop through all Nodes
                 for (int i = 0; i < path.Count; i++)
                 {
-                    // rotate and move to Node after next if possible
-                    int nextIndex = Mathf.Clamp(i+1, 0, path.Count-1);
-                    nextNode = path[nextIndex];
-                    FaceNextPosition(transform.position, nextNode.transform.position);
+                    // move to next Node
+                    nextNode = path[i];
+
+                    // aim at the Node after that to minimize flipping
+                    int nextAimIndex = Mathf.Clamp(i + 1, 0, path.Count - 1);
+                    Node aimNode = path[nextAimIndex];
+                    FaceNextPosition(transform.position, aimNode.transform.position);
 
                     yield return StartCoroutine(MoveToNodeRoutine(transform.position, nextNode));
                 }
@@ -168,8 +162,8 @@ namespace RW.MonumentValley
             if (playerAnimation != null)
                 playerAnimation.ToggleAnimation(isMoving);
 
-            if (pathfinder != null)
-                pathfinder.ClearPath();
+            //if (pathfinder != null)
+            //    pathfinder.ClearPath();
         }
 
         //    // lerp to another Node from current position
@@ -216,8 +210,6 @@ namespace RW.MonumentValley
             }
         }
 
-
-
         // turn face the next Node, always projected on a plane at the Player's feet
         public void FaceNextPosition(Vector3 startPosition, Vector3 nextPosition)
         {
@@ -255,17 +247,20 @@ namespace RW.MonumentValley
             if (pathfinder == null || graph == null || node == null)
                 return false;
 
-            return (Vector3.Distance(transform.position, node.transform.position) < 0.01f);
+            float distanceSqr = (node.transform.position - transform.position).sqrMagnitude;
+
+            return (distanceSqr < 0.01f);
         }
 
         public bool HasReachedGoal()
         {
-            if (pathfinder == null || graph == null || graph.GoalNode == null)
-                return false;
+            return HasReachedNode(graph.GoalNode);
+            //if (pathfinder == null || graph == null || graph.GoalNode == null)
+            //    return false;
 
-            float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
+            //float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
 
-            return (distanceSqr < 0.01f);
+            //return (distanceSqr < 0.01f);
         }
 
         //    // enable/disable controls
