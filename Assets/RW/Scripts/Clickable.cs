@@ -28,9 +28,6 @@
  * THE SOFTWARE.
  */
 
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
@@ -55,7 +52,11 @@ namespace RW.MonumentValley
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            clickAction?.Invoke(this, eventData.pressPosition);
+            if (clickAction != null)
+            {
+                clickAction.Invoke(this, eventData.pressPosition);
+            }
+
         }
     }
 }
