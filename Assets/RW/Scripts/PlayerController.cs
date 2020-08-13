@@ -154,9 +154,11 @@ namespace RW.MonumentValley
                 // loop through all Nodes
                 for (int i = 0; i < path.Count; i++)
                 {
-                    // rotate and move to next Node
-                    nextNode = path[i];
-                    FaceNextNode(transform.position, nextNode.transform.position);
+                    // rotate and move to Node after next if possible
+                    int nextIndex = Mathf.Clamp(i+1, 0, path.Count-1);
+                    nextNode = path[nextIndex];
+                    FaceNextPosition(transform.position, nextNode.transform.position);
+
                     yield return StartCoroutine(MoveToNodeRoutine(transform.position, nextNode));
                 }
             }
@@ -179,7 +181,7 @@ namespace RW.MonumentValley
             // validate move time
             moveTime = Mathf.Clamp(moveTime, 0.1f, 5f);
 
-            while (elapsedTime < moveTime && targetNode != null)
+            while (elapsedTime < moveTime && targetNode != null && !HasReachedNode(targetNode))
             {
 
                 elapsedTime += Time.deltaTime;
@@ -214,8 +216,10 @@ namespace RW.MonumentValley
             }
         }
 
+
+
         // turn face the next Node, always projected on a plane at the Player's feet
-        public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
+        public void FaceNextPosition(Vector3 startPosition, Vector3 nextPosition)
         {
             if (Camera.main == null)
             {
@@ -244,6 +248,14 @@ namespace RW.MonumentValley
                     transform.rotation = Quaternion.LookRotation(directionToNextNode);
                 }
             }
+        }
+
+        public bool HasReachedNode(Node node)
+        {
+            if (pathfinder == null || graph == null || node == null)
+                return false;
+
+            return (Vector3.Distance(transform.position, node.transform.position) < 0.01f);
         }
 
         public bool HasReachedGoal()
