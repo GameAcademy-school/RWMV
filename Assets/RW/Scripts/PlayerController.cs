@@ -58,10 +58,7 @@ namespace RW.MonumentValley
         private Node currentNode;
         private Node nextNode;
 
-        // TO-DO delete (probably not used)
-        //private bool hasReachedDestination;
-
-        //    // flags
+        // flags
         private bool isMoving;
         private bool isControlEnabled;
         private PlayerAnimation playerAnimation;
@@ -84,23 +81,27 @@ namespace RW.MonumentValley
 
         private void Start()
         {
-
             // always start on a Node
             SnapToNearestNode();
-            pathfinder?.SetStartNode(transform.position);
+            if (pathfinder != null)
+            {
+                pathfinder.SetStartNode(transform.position);
+            }
 
             //listen to each clickable's clickEvent
             foreach (Clickable c in clickables)
             {
                 c.clickAction += OnClick;
             }
-
         }
 
         private void OnClick(Clickable clickable, Vector3 position)
         {
             if (!isControlEnabled || clickable == null || pathfinder == null)
+            {
                 return;
+            }
+
 
             Node clickedNode = graph.FindClosestNode(clickable.ChildNodes, position);
 
@@ -121,6 +122,8 @@ namespace RW.MonumentValley
             }
             else
             {
+                Debug.Log("clicked Node = " + clickedNode.name);
+                Debug.Log("new path count = " + newPath.Count);
                 Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
             }
         }
@@ -240,7 +243,6 @@ namespace RW.MonumentValley
                 {
                     transform.rotation = Quaternion.LookRotation(directionToNextNode);
                 }
-
             }
         }
 
