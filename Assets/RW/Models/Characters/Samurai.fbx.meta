@@ -3,7 +3,17 @@ guid: 44b44084efa8441188c0ce3aab3d7970
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CuteMaterial
+    second: {fileID: 2100000, guid: 924b4f64b34b74c929020821a3bf520c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CuteMaterial.001
+    second: {fileID: 2100000, guid: 48f08fc188f734e97a43af4eb0b1d494, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -15,8 +25,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
-      human bone 'LeftFoot' not found\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
