@@ -134,45 +134,10 @@ namespace RW.MonumentValley
             }
         }
 
-
-
-
-        //private void OnClick(Node clickedNode)
-        //{
-
-        //    //if (!isControlEnabled || clickedNode == null)
-        //    //    return;
-
-
-        //    pathfinder?.FindPath(currentNode, clickedNode);
-
-        //    List<Node> newPath = pathfinder?.PathNodes;
-        //    Debug.Log("PLAYERCONTROLLER Clicked Node =  " + clickedNode.name);
-
-
-        //    //if (isMoving)
-        //    //{
-        //    //    StopAllCoroutines();
-        //    //}
-
-        //    //cursor?.ShowCursor(clickedNode.transform.position);
-
-        //    // evaluate if we have a valid path to clickedNode and follow
-        //    //if (newPath.Count > 1 && newPath[newPath.Count - 1] == clickedNode)
-        //    //{
-        //    //    StartCoroutine(FollowPathRoutine(newPath));
-        //    //}
-        //    //else
-        //    //{
-        //    //    Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
-        //    //}
-        //}
-
         private IEnumerator FollowPathRoutine(List<Node> path)
         {
 
             isMoving = true;
-            //hasReachedDestination = false;
 
             if (path == null || path.Count <= 1)
             {
@@ -180,21 +145,26 @@ namespace RW.MonumentValley
             }
             else
             {
-                //ToggleAnimation(isMoving);
+                if (playerAnimation != null)
+                    playerAnimation.ToggleAnimation(isMoving);
 
                 // loop through all Nodes
                 for (int i = 0; i < path.Count; i++)
                 {
                     // rotate and move to next Node
                     nextNode = path[i];
-                    //FaceNextNode(transform.position, nextNode.transform.position);
+                    FaceNextNode(transform.position, nextNode.transform.position);
                     yield return StartCoroutine(MoveToNodeRoutine(transform.position, nextNode));
                 }
             }
 
             isMoving = false;
-            //ToggleAnimation(isMoving);
-            pathfinder?.ClearPath();
+
+            if (playerAnimation != null)
+                playerAnimation.ToggleAnimation(isMoving);
+
+            if (pathfinder != null)
+                pathfinder.ClearPath();
         }
 
         //    // lerp to another Node from current position
@@ -241,38 +211,38 @@ namespace RW.MonumentValley
             }
         }
 
-        //    // turn face the next Node, always projected on a plane at the Player's feet
-        //public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
-        //{
-        //    if (Camera.main == null)
-        //    {
-        //        return;
-        //    }
+        // turn face the next Node, always projected on a plane at the Player's feet
+        public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
+        {
+            if (Camera.main == null)
+            {
+                return;
+            }
 
-        //    // convert next Node world space to screen space
-        //    Vector3 nextPositionScreen = Camera.main.WorldToScreenPoint(nextPosition);
+            // convert next Node world space to screen space
+            Vector3 nextPositionScreen = Camera.main.WorldToScreenPoint(nextPosition);
 
-        //    // convert next Node screen point to Ray
-        //    Ray rayToNextPosition = Camera.main.ScreenPointToRay(nextPositionScreen);
+            // convert next Node screen point to Ray
+            Ray rayToNextPosition = Camera.main.ScreenPointToRay(nextPositionScreen);
 
-        //    // plane at player's feet
-        //    Plane plane = new Plane(Vector3.up, startPosition);
+            // plane at player's feet
+            Plane plane = new Plane(Vector3.up, startPosition);
 
-        //    // distance from camera
-        //    float cameraDistance = 0f;
+            // distance from camera
+            float cameraDistance = 0f;
 
-        //    // project the nextNode onto the plane and face toward projected point
-        //    if (plane.Raycast(rayToNextPosition, out cameraDistance))
-        //    {
-        //        Vector3 nextPositionOnPlane = rayToNextPosition.GetPoint(cameraDistance);
-        //        Vector3 directionToNextNode = nextPositionOnPlane - startPosition;
-        //        if (directionToNextNode != Vector3.zero)
-        //        {
-        //            transform.rotation = Quaternion.LookRotation(directionToNextNode);
-        //        }
+            // project the nextNode onto the plane and face toward projected point
+            if (plane.Raycast(rayToNextPosition, out cameraDistance))
+            {
+                Vector3 nextPositionOnPlane = rayToNextPosition.GetPoint(cameraDistance);
+                Vector3 directionToNextNode = nextPositionOnPlane - startPosition;
+                if (directionToNextNode != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(directionToNextNode);
+                }
 
-        //    }
-        //}
+            }
+        }
 
         public bool HasReachedGoal()
         {

@@ -5,33 +5,31 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
 
-
-
-    //    // multiplier for walk AnimationClip
-    //    [Range(0.5f, 3f)]
+    // multiplier for walk AnimationClip
+    [Range(0.5f, 3f)]
     [SerializeField] private float walkAnimSpeed = 1f;
 
-    //    // player Animator Controller
+    // player Animator Controller
     [SerializeField] private Animator animController;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // set AnimationClip speed
-        animController?.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (animController != null)
+        {
+            // set AnimationClip speed
+            animController.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
+        }
     }
 
     //    // toggle between idle and walking animation
     public void ToggleAnimation(bool state)
     {
-        animController?.SetBool("isMoving", state);
+        if (animController != null)
+        {
+            animController?.SetBool("isMoving", state);
+        }
+
     }
 }
