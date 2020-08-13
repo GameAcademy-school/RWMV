@@ -28,7 +28,6 @@
  * THE SOFTWARE.
  */
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -78,7 +77,9 @@ namespace RW.MonumentValley
         private void Start()
         {
             if (searchOnStart)
+            {
                 FindPath();
+            }
         }
 
         // initialize all Nodes/lists

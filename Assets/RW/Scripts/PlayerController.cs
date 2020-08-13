@@ -29,26 +29,22 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RW.MonumentValley
 {
     // handles Player input and movement
+    [RequireComponent(typeof(PlayerAnimation))]
     public class PlayerController : MonoBehaviour
     {
 
         //    // time to move one unit
         //    [Range(0.25f, 2f)]
-        //    [SerializeField] private float moveTime = 0.25f;
-
-        //    // multiplier for walk AnimationClip
-        //    [Range(0.5f, 3f)]
-        //    [SerializeField] private float walkAnimSpeed = 1f;
-
-        //    // player Animator Controller
-        //    [SerializeField] private Animator animController;
+        [SerializeField] private float moveTime = 0.5f;
 
         //    // click indicator
         //    [SerializeField] Cursor cursor;
@@ -62,80 +58,100 @@ namespace RW.MonumentValley
         private Graph graph;
         private Node currentNode;
         private Node nextNode;
-        private bool hasReachedDestination;
+
+        // TO-DO delete (probably not used)
+        //private bool hasReachedDestination;
 
         //    // flags
-        //    private bool isMoving;
-        //    private bool isGameOver;
+        private bool isMoving;
+        private bool isControlEnabled;
+        private PlayerAnimation playerAnimation;
 
-        //    private void Awake()
-        //    {
-        //        // listen to each clickable's clickEvent
-        //        clickables = FindObjectsOfType<Clickable>();
-        //        pathfinder = FindObjectOfType<Pathfinder>();
+        private void Awake()
+        {
+            //  initialize fields
+            clickables = FindObjectsOfType<Clickable>();
+            pathfinder = FindObjectOfType<Pathfinder>();
+            playerAnimation = GetComponent<PlayerAnimation>();
 
-        //        foreach (Clickable c in clickables)
-        //        {
-        //            c.clickAction += OnClick;
-        //        }
+            if (pathfinder != null)
+            {
+                graph = pathfinder.GetComponent<Graph>();
+            }
 
-        //        // initialize fields
-        //        if (pathfinder != null)
-        //        {
-        //            graph = pathfinder.GetComponent<Graph>();
-        //        }
+            isMoving = false;
+            isControlEnabled = true;
+        }
 
-        //        isMoving = false;
-        //        isGameOver = false;
-        //    }
+        private void Start()
+        {
 
-        //    private void Start()
-        //    {
+            // always start on a Node
+            SnapToNearestNode();
+            pathfinder?.SetStartNode(transform.position);
 
-        //        // set AnimationClip speed
-        //        animController?.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
+            //listen to each clickable's clickEvent
+            foreach (Clickable c in clickables)
+            {
+                c.clickAction += OnClick;
+            }
 
-        //        // always start on a Node
-        //        SnapToNearestNode();
-        //        pathfinder?.SetStartNode(transform.position);
-        //    }
+        }
 
-        //    private void OnDisable()
-        //    {
-        //        // unsubscribe to each clickable's clickEvent
-        //        foreach (Clickable c in clickables)
-        //        {
-        //            c.clickAction -= OnClick;
-        //        }
-        //    }
+        private void OnClick(Clickable clickable, Vector3 position)
+        {
+            if (!isControlEnabled || clickable == null || pathfinder == null)
+                return;
 
-        //    private void OnClick(Node clickedNode)
-        //    {
+            Node clickedNode = graph.FindClosestNode(clickable.ChildNodes, position);
 
-        //        if (isGameOver || clickedNode == null)
-        //            return;
+            pathfinder.FindPath(currentNode, clickedNode);
+
+            List<Node> newPath = pathfinder.PathNodes;
+        }
+
+        private void OnDisable()
+        {
+            // unsubscribe to each clickable's clickEvent
+            foreach (Clickable c in clickables)
+            {
+                c.clickAction -= OnClick;
+            }
+        }
 
 
-        //        pathfinder?.FindPath(currentNode, clickedNode);
-        //        List<Node> newPath = pathfinder?.PathNodes;
 
-        //        if (isMoving)
-        //        {
-        //            StopAllCoroutines();
-        //        }
 
-        //        cursor?.ShowCursor(clickedNode.transform.position);
+        //private void OnClick(Node clickedNode)
+        //{
 
-        //        // evaluate if we have a valid path to clickedNode and follow
-        //        if (newPath.Count > 1 && newPath[newPath.Count - 1] == clickedNode)
-        //        {
-        //            StartCoroutine(FollowPathRoutine(newPath));
-        //        }
-        //        else
-        //        {
-        //            Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
-        //        }
-        //    }
+        //    //if (!isControlEnabled || clickedNode == null)
+        //    //    return;
+
+
+        //    pathfinder?.FindPath(currentNode, clickedNode);
+
+        //    List<Node> newPath = pathfinder?.PathNodes;
+        //    Debug.Log("PLAYERCONTROLLER Clicked Node =  " + clickedNode.name);
+
+
+        //    //if (isMoving)
+        //    //{
+        //    //    StopAllCoroutines();
+        //    //}
+
+        //    //cursor?.ShowCursor(clickedNode.transform.position);
+
+        //    // evaluate if we have a valid path to clickedNode and follow
+        //    //if (newPath.Count > 1 && newPath[newPath.Count - 1] == clickedNode)
+        //    //{
+        //    //    StartCoroutine(FollowPathRoutine(newPath));
+        //    //}
+        //    //else
+        //    //{
+        //    //    Debug.Log("PLAYERCONTROLLER OnClick: Invalid path...");
+        //    //}
+        //}
 
         //    private IEnumerator FollowPathRoutine(List<Node> path)
         //    {
@@ -199,69 +215,64 @@ namespace RW.MonumentValley
         //        }
         //    }
 
-        //    // snap the Player to the nearest Node in Game view
-        //    public void SnapToNearestNode()
-        //    {
-        //        Node nearestNode = graph?.FindClosestNode(transform.position);
-        //        if (nearestNode != null)
-        //        {
-        //            currentNode = nearestNode;
-        //            transform.position = nearestNode.transform.position;
-        //        }
-        //    }
+        // snap the Player to the nearest Node in Game view
+        public void SnapToNearestNode()
+        {
+            Node nearestNode = graph?.FindClosestNode(transform.position);
+            if (nearestNode != null)
+            {
+                currentNode = nearestNode;
+                transform.position = nearestNode.transform.position;
+            }
+        }
 
         //    // turn face the next Node, always projected on a plane at the Player's feet
-        //    public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
+        //public void FaceNextNode(Vector3 startPosition, Vector3 nextPosition)
+        //{
+        //    if (Camera.main == null)
         //    {
-        //        if (Camera.main == null)
+        //        return;
+        //    }
+
+        //    // convert next Node world space to screen space
+        //    Vector3 nextPositionScreen = Camera.main.WorldToScreenPoint(nextPosition);
+
+        //    // convert next Node screen point to Ray
+        //    Ray rayToNextPosition = Camera.main.ScreenPointToRay(nextPositionScreen);
+
+        //    // plane at player's feet
+        //    Plane plane = new Plane(Vector3.up, startPosition);
+
+        //    // distance from camera
+        //    float cameraDistance = 0f;
+
+        //    // project the nextNode onto the plane and face toward projected point
+        //    if (plane.Raycast(rayToNextPosition, out cameraDistance))
+        //    {
+        //        Vector3 nextPositionOnPlane = rayToNextPosition.GetPoint(cameraDistance);
+        //        Vector3 directionToNextNode = nextPositionOnPlane - startPosition;
+        //        if (directionToNextNode != Vector3.zero)
         //        {
-        //            return;
+        //            transform.rotation = Quaternion.LookRotation(directionToNextNode);
         //        }
 
-        //        // convert next Node world space to screen space
-        //        Vector3 nextPositionScreen = Camera.main.WorldToScreenPoint(nextPosition);
-
-        //        // convert next Node screen point to Ray
-        //        Ray rayToNextPosition = Camera.main.ScreenPointToRay(nextPositionScreen);
-
-        //        // plane at player's feet
-        //        Plane plane = new Plane(Vector3.up, startPosition);
-
-        //        // distance from camera
-        //        float cameraDistance = 0f;
-
-        //        // project the nextNode onto the plane and face toward projected point
-        //        if (plane.Raycast(rayToNextPosition, out cameraDistance))
-        //        {
-        //            Vector3 nextPositionOnPlane = rayToNextPosition.GetPoint(cameraDistance);
-        //            Vector3 directionToNextNode = nextPositionOnPlane - startPosition;
-        //            if (directionToNextNode != Vector3.zero)
-        //            {
-        //                transform.rotation = Quaternion.LookRotation(directionToNextNode);
-        //            }
-
-        //        }
         //    }
+        //}
 
-        //    // toggle between idle and walking animation
-        //    private void ToggleAnimation(bool state)
-        //    {
-        //        animController?.SetBool("isMoving", state);
-        //    }
+        //public bool HasReachedGoal()
+        //{
+        //    if (pathfinder == null || graph == null || graph.GoalNode == null)
+        //        return false;
 
-        //    public bool HasReachedGoal()
-        //    {
-        //        if (pathfinder == null || graph == null || graph.GoalNode == null)
-        //            return false;
+        //    float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
 
-        //        float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
+        //    return (distanceSqr < 0.01f);
+        //}
 
-        //        return (distanceSqr < 0.01f);
-        //    }
-
-        //    // disable controls
-        //    public void EndGame()
-        //    {
-        //        isGameOver = true;
+        //    // enable/disable controls
+        public void EnableControls(bool state)
+        {
+            isControlEnabled = state;
+        }
     }
 }

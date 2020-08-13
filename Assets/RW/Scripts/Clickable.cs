@@ -33,48 +33,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 namespace RW.MonumentValley
 {
     // allows player to click on a block to set path goal
     [RequireComponent(typeof(Collider))]
-    public class Clickable : MonoBehaviour
-    {
+    public class Clickable : MonoBehaviour,IPointerDownHandler
+    { 
         // Nodes under this Transform
         private Node[] childNodes;
-
-        // reference to Graph
-        private Graph graph;
+        public Node[] ChildNodes => childNodes;
 
         // invoked when collider is clicked
-        public Action<Node> clickAction;
+        public Action<Clickable,Vector3> clickAction;
 
-        private void Start()
+        private void Awake()
         {
             childNodes = GetComponentsInChildren<Node>();
-            graph = FindObjectOfType<Graph>();
         }
 
-        private void OnMouseDown()
+        public void OnPointerDown(PointerEventData eventData)
         {
-            // validate components
-            if (graph == null)
-            {
-                return;
-            }
-
-            // raycast and find the path to the closest node
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 100))
-            {
-                // find the closest Node in Screen space
-                Node clickedNode = graph.FindClosestNode(childNodes, hit.point);
-
-                // trigger event clickable event
-                clickAction?.Invoke(clickedNode);
-
-            }
+            clickAction?.Invoke(this, eventData.pressPosition);
         }
     }
 }
