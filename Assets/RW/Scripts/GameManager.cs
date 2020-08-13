@@ -77,31 +77,32 @@ namespace RW.MonumentValley
 
         private void Update()
         {
-            //if (playerController != null && playerController.HasReachedGoal())
-            //{
-            //    Win();
-            //}
+            if (playerController != null && playerController.HasReachedGoal())
+            {
+                Win();
+            }
         }
 
-        //private void Win()
-        //{
-        //    // flag to ensure Win only triggers once
-        //    if (isGameOver)
-        //    {
-        //        return;
-        //    }
-        //    isGameOver = true;
+        private void Win()
+        {
+            // flag to ensure Win only triggers once
+            if (isGameOver || playerController == null)
+            {
+                return;
+            }
+            isGameOver = true;
 
-        //    // disable player controls
-        //    playerController?.EndGame();
+            // disable player controls
+            playerController.EnableControls(false);
 
-        //    // play win animation
-        //    StartCoroutine(WinRoutine());
-        //}
+            // play win animation
+            StartCoroutine(WinRoutine());
+        }
 
         private IEnumerator WinRoutine()
         {
-            restartEvent?.Invoke();
+            if (restartEvent != null)
+                restartEvent.Invoke();
 
             // yield Animation time
             yield return new WaitForSeconds(delayTime);
