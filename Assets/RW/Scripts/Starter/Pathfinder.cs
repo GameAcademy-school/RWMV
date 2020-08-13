@@ -57,8 +57,8 @@ namespace RW.MonumentValley
         // is the search complete?
         private bool isSearchComplete;
 
-        // has the goal been found?
-        private bool hasFoundGoal;
+        // has the destination been found?
+        private bool isPathComplete;
 
         // structure containing all Nodes
         private Graph graph;
@@ -67,7 +67,7 @@ namespace RW.MonumentValley
         public Node StartNode { get { return startNode; } set { startNode = value; } }
         public Node DestinationNode { get { return destinationNode; } set { destinationNode = value; } }
         public List<Node> PathNodes => pathNodes;
-        public bool HasFoundGoal => hasFoundGoal;
+        public bool IsPathComplete => isPathComplete;
 
         private void Awake()
         {
@@ -96,7 +96,7 @@ namespace RW.MonumentValley
             pathNodes = new List<Node>();
 
             isSearchComplete = false;
-            hasFoundGoal = false;
+            isPathComplete = false;
 
             // remove results of previous searches
             graph.ResetNodes();
@@ -139,21 +139,13 @@ namespace RW.MonumentValley
         }
 
         // set the PathNodes from the startNode to destinationNode
-        public void FindPath()
+        public List<Node> FindPath()
         {
-            if (startNode == null || destinationNode == null)
-            {
-                return;
-            }
+            List<Node> newPath = new List<Node>();
 
-            // special case if goalNode is the same as the startNode
-            if (startNode == destinationNode)
+            if (startNode == null || destinationNode == null || startNode == destinationNode)
             {
-                List<Node> pathOfOne = new List<Node>();
-                pathOfOne.Add(destinationNode);
-                pathNodes = pathOfOne;
-                isSearchComplete = true;
-                return;
+                return newPath;
             }
 
             // prevents infinite loop
@@ -184,28 +176,40 @@ namespace RW.MonumentValley
                     // add unexplored neighboring Nodes to frontier
                     ExpandFrontier(currentNode);
 
-                    // if we have found the goal
+                    // if we have found the destination Node
                     if (frontierNodes.Contains(destinationNode))
                     {
                         // generate the Path to the goal
-                        pathNodes = GetPathNodes();
+                       // pathNodes = GetPathNodes();
+                        newPath = GetPathNodes();
                         isSearchComplete = true;
-                        hasFoundGoal = true;
+                        isPathComplete = true;
                     }
                 }
                 // if whole graph explored but no path found
                 else
                 {
                     isSearchComplete = true;
+                    isPathComplete = false;
                 }
             }
+            return newPath;
         }
 
-        public void FindPath(Node startNode, Node destinationNode)
+        public void FindPath(Node start, Node destination)
         {
-            this.destinationNode = destinationNode;
-            this.startNode = startNode;
-            FindPath();
+            this.destinationNode = destination;
+            this.startNode = start;
+            pathNodes = FindPath();
+        }
+
+        public List<Node> FindBestPath(Node start, Node[] possibleDestinations)
+        {
+            List<Node> bestPath = new List<Node>();
+
+
+
+            return bestPath;
         }
 
         public void ClearPath()
