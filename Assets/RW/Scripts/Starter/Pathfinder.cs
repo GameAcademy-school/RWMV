@@ -51,7 +51,7 @@ namespace RW.MonumentValley
         // Nodes already explored
         private List<Node> exploredNodes;
 
-        // Nodes that form a path to the goal Node
+        // Nodes that form a path to the goal Node (for Gizmo drawing)
         private List<Node> pathNodes;
 
         // is the search complete?
@@ -127,9 +127,8 @@ namespace RW.MonumentValley
                 }
 
                 // create PreviousNode breadcrumb trail if Edge is active
-                if (node.Edges[i].isActive)
+                if (node.Edges[i].isActive && node.Edges[i].neighbor != null)
                 {
-                    // set the neighbor's previous node to this node
                     node.Edges[i].neighbor.PreviousNode = node;
 
                     // add neighbor Nodes to frontier Nodes
@@ -196,24 +195,52 @@ namespace RW.MonumentValley
             return newPath;
         }
 
-        public void FindPath(Node start, Node destination)
+        public List<Node> FindPath(Node start, Node destination)
         {
             this.destinationNode = destination;
             this.startNode = start;
-            pathNodes = FindPath();
+            return FindPath();
         }
 
+        // find the best path given a bunch of possible Node destinations
         public List<Node> FindBestPath(Node start, Node[] possibleDestinations)
         {
             List<Node> bestPath = new List<Node>();
+            foreach (Node n in possibleDestinations)
+            {
+                List<Node> possiblePath = FindPath(start, n);
 
+                if (!isPathComplete && isSearchComplete)
+                {
+                    continue;
+                }
 
+                if (bestPath.Count == 0 && possiblePath.Count > 0)
+                {
+                    bestPath = possiblePath;
+                }
 
+                if (bestPath.Count > 0 && possiblePath.Count < bestPath.Count)
+                {
+                    bestPath = possiblePath;
+                }
+            }
+
+            if (bestPath.Count <= 1)
+            {
+                ClearPath();
+                return new List<Node>();
+            }
+
+            destinationNode = bestPath[bestPath.Count - 1];
+            pathNodes = bestPath;
             return bestPath;
         }
 
         public void ClearPath()
         {
+            startNode = null;
+            destinationNode = null;
             pathNodes = new List<Node>();
         }
 
