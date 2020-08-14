@@ -54,7 +54,7 @@ namespace RW.MonumentValley
         {
             if (clickAction != null)
             {
-                clickAction.Invoke(this, eventData.pressPosition);
+                clickAction.Invoke(this, eventData.pointerPressRaycast.worldPosition);
             }
 
         }
