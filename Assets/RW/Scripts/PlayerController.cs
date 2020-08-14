@@ -41,8 +41,8 @@ namespace RW.MonumentValley
     public class PlayerController : MonoBehaviour
     {
 
-        //    // time to move one unit
-            [Range(0.25f, 2f)]
+        //  time to move one unit
+        [Range(0.25f, 2f)]
         [SerializeField] private float moveTime = 0.5f;
 
         // click indicator
@@ -116,7 +116,6 @@ namespace RW.MonumentValley
                 cursor.ShowCursor(position);
             }
 
-
             if (newPath.Count > 1)
             {
                 StartCoroutine(FollowPathRoutine(newPath));
@@ -164,13 +163,13 @@ namespace RW.MonumentValley
             isMoving = false;
 
             if (playerAnimation != null)
+            {
                 playerAnimation.ToggleAnimation(isMoving);
+            }
 
-            //if (pathfinder != null)
-            //    pathfinder.ClearPath();
         }
 
-        //    // lerp to another Node from current position
+        //  lerp to another Node from current position
         private IEnumerator MoveToNodeRoutine(Vector3 startPosition, Node targetNode)
         {
 
@@ -246,6 +245,7 @@ namespace RW.MonumentValley
             }
         }
 
+        // have we reached a specific Node?
         public bool HasReachedNode(Node node)
         {
             if (pathfinder == null || graph == null || node == null)
@@ -256,15 +256,10 @@ namespace RW.MonumentValley
             return (distanceSqr < 0.01f);
         }
 
+        // have we reached the end of the graph?
         public bool HasReachedGoal()
         {
             return HasReachedNode(graph.GoalNode);
-            //if (pathfinder == null || graph == null || graph.GoalNode == null)
-            //    return false;
-
-            //float distanceSqr = (graph.GoalNode.transform.position - transform.position).sqrMagnitude;
-
-            //return (distanceSqr < 0.01f);
         }
 
         //    // enable/disable controls

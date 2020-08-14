@@ -29,7 +29,7 @@
  */
 
 using UnityEngine;
-using System;
+using System; 
 using UnityEngine.EventSystems;
 
 namespace RW.MonumentValley
@@ -54,6 +54,7 @@ namespace RW.MonumentValley
         {
             if (clickAction != null)
             {
+                // invoke the clickAction with world space raycast hit position
                 clickAction.Invoke(this, eventData.pointerPressRaycast.worldPosition);
             }
 
