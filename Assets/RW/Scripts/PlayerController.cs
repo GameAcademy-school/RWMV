@@ -45,11 +45,11 @@ namespace RW.MonumentValley
             [Range(0.25f, 2f)]
         [SerializeField] private float moveTime = 0.5f;
 
-        //    // click indicator
-        //    [SerializeField] Cursor cursor;
+        // click indicator
+        [SerializeField] Cursor cursor;
 
-        //    // cursor AnimationController
-        //    private Animator cursorAnimController;
+        // cursor AnimationController
+        private Animator cursorAnimController;
 
         //    // pathfinding fields
         private Clickable[] clickables;
@@ -111,7 +111,11 @@ namespace RW.MonumentValley
                 StopAllCoroutines();
             }
 
-            //    //cursor?.ShowCursor(clickedNode.transform.position);
+            if (cursor != null)
+            {
+                cursor.ShowCursor(position);
+            }
+
 
             if (newPath.Count > 1)
             {
