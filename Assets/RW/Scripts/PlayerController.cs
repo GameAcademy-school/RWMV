@@ -51,7 +51,7 @@ namespace RW.MonumentValley
         // cursor AnimationController
         private Animator cursorAnimController;
 
-        //    // pathfinding fields
+        // pathfinding fields
         private Clickable[] clickables;
         private Pathfinder pathfinder;
         private Graph graph;
@@ -83,15 +83,25 @@ namespace RW.MonumentValley
         {
             // always start on a Node
             SnapToNearestNode();
+
             if (pathfinder != null)
             {
                 pathfinder.SetStartNode(transform.position);
             }
 
-            //listen to each clickable's clickEvent
+            //listen to all clickEvents
             foreach (Clickable c in clickables)
             {
                 c.clickAction += OnClick;
+            }
+        }
+
+        private void OnDisable()
+        {
+            // unsubscribe from clickEvents when disabled
+            foreach (Clickable c in clickables)
+            {
+                c.clickAction -= OnClick;
             }
         }
 
@@ -111,29 +121,24 @@ namespace RW.MonumentValley
                 StopAllCoroutines();
             }
 
+            // show a marker for the mouse click
             if (cursor != null)
             {
                 cursor.ShowCursor(position);
             }
 
+            // if we have a valid path, follow it
             if (newPath.Count > 1)
             {
                 StartCoroutine(FollowPathRoutine(newPath));
             }
         }
 
-        private void OnDisable()
-        {
-            // unsubscribe to each clickable's clickEvent
-            foreach (Clickable c in clickables)
-            {
-                c.clickAction -= OnClick;
-            }
-        }
+
 
         private IEnumerator FollowPathRoutine(List<Node> path)
         {
-
+            // start moving
             isMoving = true;
 
             if (path == null || path.Count <= 1)
@@ -142,13 +147,12 @@ namespace RW.MonumentValley
             }
             else
             {
-                if (playerAnimation != null)
-                    playerAnimation.ToggleAnimation(isMoving);
+                UpdateAnimation();
 
                 // loop through all Nodes
                 for (int i = 0; i < path.Count; i++)
                 {
-                    // move to next Node
+                    // use the current Node as the next waypoint
                     nextNode = path[i];
 
                     // aim at the Node after that to minimize flipping
@@ -156,16 +160,13 @@ namespace RW.MonumentValley
                     Node aimNode = path[nextAimIndex];
                     FaceNextPosition(transform.position, aimNode.transform.position);
 
+                    // move to the next Node
                     yield return StartCoroutine(MoveToNodeRoutine(transform.position, nextNode));
                 }
             }
 
             isMoving = false;
-
-            if (playerAnimation != null)
-            {
-                playerAnimation.ToggleAnimation(isMoving);
-            }
+            UpdateAnimation();
 
         }
 
@@ -194,7 +195,7 @@ namespace RW.MonumentValley
                     currentNode = targetNode;
 
                     // invoke UnityEvent associated with next Node
-                    targetNode.playerEvent?.Invoke();
+                    targetNode.gameEvent.Invoke();
                 }
 
                 // wait one frame
@@ -245,6 +246,15 @@ namespace RW.MonumentValley
             }
         }
 
+        // toggle between Idle and Walk animations
+        private void UpdateAnimation()
+        {
+            if (playerAnimation != null)
+            {
+                playerAnimation.ToggleAnimation(isMoving);
+            }
+        }
+
         // have we reached a specific Node?
         public bool HasReachedNode(Node node)
         {
@@ -262,7 +272,7 @@ namespace RW.MonumentValley
             return HasReachedNode(graph.GoalNode);
         }
 
-        //    // enable/disable controls
+        //  enable/disable controls
         public void EnableControls(bool state)
         {
             isControlEnabled = state;

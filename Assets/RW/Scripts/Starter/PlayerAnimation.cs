@@ -10,25 +10,25 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private float walkAnimSpeed = 1f;
 
     // player Animator Controller
-    [SerializeField] private Animator animController;
+    [SerializeField] private Animator animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (animController != null)
+        if (animator != null)
         {
             // set AnimationClip speed
-            animController.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
+            animator.SetFloat("walkSpeedMultiplier", walkAnimSpeed);
         }
     }
 
     //    // toggle between idle and walking animation
     public void ToggleAnimation(bool state)
     {
-        if (animController != null)
+        if (animator != null)
         {
-            animController?.SetBool("isMoving", state);
+            animator?.SetBool("isMoving", state);
         }
 
     }

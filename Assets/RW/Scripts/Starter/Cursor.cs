@@ -39,7 +39,7 @@ namespace RW.MonumentValley
     public class Cursor : MonoBehaviour
     {
         // extra distance offset toward camera
-        [SerializeField] private float offsetDistance = 5f;
+        [SerializeField] private float offsetDistance = 1f;
 
         private Camera cam;
 

@@ -50,7 +50,7 @@ namespace RW.MonumentValley
         [SerializeField] private List<Node> excludedNodes;
 
         // invoked when Player enters this node
-        public UnityEvent playerEvent;
+        public UnityEvent gameEvent;
 
 
         public Node PreviousNode { get { return previousNode; } set { previousNode = value; } }
