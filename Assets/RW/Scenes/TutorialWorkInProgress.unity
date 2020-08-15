@@ -3019,28 +3019,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867387191}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5aacdc8d43f8a4b4cb5eaf7654ce2f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   links:
-  - linkedTransform: {fileID: 0}
-    activeEulerAngle: {x: 0, y: 0, z: 0}
-    nodeA: {fileID: 0}
-    nodeB: {fileID: 0}
-  - linkedTransform: {fileID: 0}
-    activeEulerAngle: {x: 0, y: 0, z: 0}
-    nodeA: {fileID: 0}
-    nodeB: {fileID: 0}
-  - linkedTransform: {fileID: 0}
-    activeEulerAngle: {x: 0, y: 0, z: 0}
-    nodeA: {fileID: 0}
-    nodeB: {fileID: 0}
-  - linkedTransform: {fileID: 0}
-    activeEulerAngle: {x: 0, y: 0, z: 0}
-    nodeA: {fileID: 0}
-    nodeB: {fileID: 0}
+  - linkedTransform: {fileID: 1655067876}
+    activeEulerAngle: {x: 90, y: 0, z: 0}
+    nodeA: {fileID: 263146359}
+    nodeB: {fileID: 1105883724}
+  - linkedTransform: {fileID: 1655067876}
+    activeEulerAngle: {x: 90, y: 0, z: 0}
+    nodeA: {fileID: 2122348611}
+    nodeB: {fileID: 405640752}
 --- !u!114 &1932206957 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3970511121051995176, guid: b9b992cdfe68345c8a2a6f927e451714,

@@ -29,6 +29,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RW.MonumentValley
 {
@@ -74,6 +75,8 @@ namespace RW.MonumentValley
 
         // Vector representing axis of rotation
         private Vector3 axisDirection;
+
+        public UnityEvent snapEvent;
 
         void Start()
         {
@@ -137,8 +140,10 @@ namespace RW.MonumentValley
             // snap to nearest 90-degree interval
             RoundToRightAngles(targetToSpin);
 
-            // don't like referencing this directly but not using separate game Events to save on word count
-            //linker?.UpdateRotationLinks();
+            // invoke 
+            if (snapEvent != null)
+                snapEvent.Invoke();
+
         }
 
         // round to nearest 90 degrees
