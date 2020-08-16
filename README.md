@@ -1,2 +1,2 @@
 # RWMV
-starting file for Monument Valley demo
+project file for RW Monument Valley tutorial
