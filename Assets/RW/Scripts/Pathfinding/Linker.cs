@@ -52,7 +52,7 @@ namespace RW.MonumentValley
     // activates or deactivates special Edges between Nodes
     public class Linker : MonoBehaviour
     {
-        [SerializeField] public RotationLink[] links;
+        [SerializeField] public RotationLink[] rotationLinks;
 
         // toggle active state of Edge between neighbor Nodes
         public void EnableLink(Node nodeA, Node nodeB, bool state)
@@ -67,7 +67,7 @@ namespace RW.MonumentValley
         // enable/disable based on transform's euler angles
         public void UpdateRotationLinks()
         {
-            foreach (RotationLink l in links)
+            foreach (RotationLink l in rotationLinks)
             {
                 if (l.linkedTransform == null || l.nodeA == null || l.nodeB == null)
                     continue;
@@ -88,6 +88,7 @@ namespace RW.MonumentValley
             }
         }
 
+        // update links when we begin
         private void Start()
         {
             UpdateRotationLinks();

@@ -52,15 +52,14 @@ namespace RW.MonumentValley
         // invoked when starting the level
         public UnityEvent initEvent;
 
-        // invoked before restarting the level
-        public UnityEvent restartEvent;
+        // invoked before ending the level
+        public UnityEvent endLevelEvent;
 
 
         private void Awake()
         {
             awakeEvent.Invoke();
             playerController = FindObjectOfType<PlayerController>();
-
         }
 
         private void Start()
@@ -77,6 +76,7 @@ namespace RW.MonumentValley
             }
         }
 
+        // win and end the level
         private void Win()
         {
             // flag to ensure Win only triggers once
@@ -95,12 +95,11 @@ namespace RW.MonumentValley
 
         private IEnumerator WinRoutine()
         {
-            if (restartEvent != null)
-                restartEvent.Invoke();
+            if (endLevelEvent != null)
+                endLevelEvent.Invoke();
 
             // yield Animation time
             yield return new WaitForSeconds(delayTime);
-
         }
 
         public void Restart(float delay)

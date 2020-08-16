@@ -30,13 +30,14 @@
 
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace RW.MonumentValley
 {
 
     // allows a target Transform to be rotated based on mouse click and drag
     [RequireComponent(typeof(Collider))]
-    public class DragSpinner : MonoBehaviour
+    public class DragSpinner : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public enum SpinAxis
         {
@@ -78,6 +79,8 @@ namespace RW.MonumentValley
 
         public UnityEvent snapEvent;
 
+        private float timeCount;
+
         void Start()
         {
             switch (spinAxis)
@@ -95,13 +98,78 @@ namespace RW.MonumentValley
             EnableSpinner(true);
         }
 
-        private void OnMouseDrag()
+        //private void OnMouseDrag()
+        //{
+        //    // if clicked...
+        //    if (isSpinning && Camera.main != null && pivot != null && isActive)
+        //    {
+        //        // get the angle to the current mouse position
+        //        directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
+        //        angleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
+
+        //        // if we have dragged a minimum threshold, rotate the target to follow the mouse movements around the pivot
+        //        // (left-handed coordinate system; positive rotations are clockwise)
+        //        if (directionToMouse.magnitude > minDragDist)
+        //        {
+        //            Vector3 newRotationVector = (previousAngleToMouse - angleToMouse) * axisDirection;
+        //            targetToSpin.Rotate(newRotationVector);
+        //            previousAngleToMouse = angleToMouse;
+        //        }
+        //    }
+        //}
+
+        // begin spin 
+        //private void OnMouseDown()
+        //{
+        //    if (!isActive)
+        //        return;
+
+        //    isSpinning = true;
+        //    directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
+        //    previousAngleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
+        //}
+
+        // begin spin drag
+        public void OnBeginDrag(PointerEventData data)
         {
-            // if clicked...
+            if (!isActive)
+                return;
+
+            isSpinning = true;
+            Vector3 inputPosition = new Vector3(data.position.x, data.position.y, 0f);
+            directionToMouse = inputPosition - Camera.main.WorldToScreenPoint(pivot.position);
+            previousAngleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
+            //Debug.Log("OnBeginDrag: " + data.position);
+
+        }
+
+        // end spin on mouse release; then round to right angle
+        public void OnEndDrag(PointerEventData data)
+        {
+            if (isActive)
+                SnapSpinner();
+            //Debug.Log("OnEndDrag: " + data.position);
+        }
+
+        public void OnDrag(PointerEventData data)
+        {
+
+            //if (data.dragging)
+            //{
+            //    timeCount += Time.deltaTime;
+            //    if (timeCount > 0.1f)
+            //    {
+            //        Debug.Log("Dragging:" + data.position);
+            //        timeCount = 0.0f;
+            //    }
+            //}
+
             if (isSpinning && Camera.main != null && pivot != null && isActive)
             {
                 // get the angle to the current mouse position
-                directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
+                Vector3 inputPosition = new Vector3(data.position.x, data.position.y, 0f);
+                //directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
+                directionToMouse = inputPosition - Camera.main.WorldToScreenPoint(pivot.position);
                 angleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
 
                 // if we have dragged a minimum threshold, rotate the target to follow the mouse movements around the pivot
@@ -115,23 +183,6 @@ namespace RW.MonumentValley
             }
         }
 
-        // begin spin 
-        private void OnMouseDown()
-        {
-            if (!isActive)
-                return;
-
-            isSpinning = true;
-            directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
-            previousAngleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
-        }
-
-        // end spin on mouse release; then round to right angle
-        private void OnMouseUp()
-        {
-            if (isActive)
-                SnapSpinner();
-        }
 
         private void SnapSpinner()
         {
@@ -166,6 +217,8 @@ namespace RW.MonumentValley
                 SnapSpinner();
             }
         }
+
+
     }
 
 }
