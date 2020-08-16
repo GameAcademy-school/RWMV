@@ -58,7 +58,6 @@ namespace RW.MonumentValley
                 // invoke the clickAction with world space raycast hit position
                 clickAction.Invoke(this, eventData.pointerPressRaycast.worldPosition);
             }
-
         }
     }
 }
