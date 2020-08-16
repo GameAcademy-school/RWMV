@@ -50,6 +50,7 @@ namespace RW.MonumentValley
             childNodes = GetComponentsInChildren<Node>();
         }
 
+        // alternative to OnMouseDown
         public void OnPointerDown(PointerEventData eventData)
         {
             if (clickAction != null)

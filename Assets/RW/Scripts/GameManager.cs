@@ -29,7 +29,6 @@
  */
 
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
@@ -45,11 +44,10 @@ namespace RW.MonumentValley
         private bool isGameOver;
         public bool IsGameOver => isGameOver;
 
-        [SerializeField] private Canvas UICanvas;
-        //[SerializeField] ScreenFader screenFader;
-        //[SerializeField] ScreenFader winText;
-
         public float delayTime = 2f;
+
+        // invoked on awake
+        public UnityEvent awakeEvent;
 
         // invoked when starting the level
         public UnityEvent initEvent;
@@ -60,12 +58,7 @@ namespace RW.MonumentValley
 
         private void Awake()
         {
-
-            if (UICanvas != null)
-            {
-                UICanvas.gameObject.SetActive(true);
-            }
-
+            awakeEvent.Invoke();
             playerController = FindObjectOfType<PlayerController>();
 
         }
@@ -75,6 +68,7 @@ namespace RW.MonumentValley
             initEvent.Invoke();
         }
 
+        // check for win condition every frame
         private void Update()
         {
             if (playerController != null && playerController.HasReachedGoal())
@@ -114,6 +108,7 @@ namespace RW.MonumentValley
             StartCoroutine(RestartRoutine(delay));
         }
 
+        // wait for a delay and restart the scene
         private IEnumerator RestartRoutine(float delay)
         {
             yield return new WaitForSeconds(delay);
