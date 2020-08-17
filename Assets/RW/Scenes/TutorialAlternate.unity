@@ -1904,6 +1904,71 @@ PrefabInstance:
       propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1867387194}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1867387193}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RW.MonumentValley.Highlighter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RW.MonumentValley.DragSpinner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: EnableSpinner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511119974676138, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3970511119988042002, guid: b9b992cdfe68345c8a2a6f927e451714,
         type: 3}
       propertyPath: excludedNodes.Array.size
@@ -2178,6 +2243,71 @@ PrefabInstance:
         type: 3}
       propertyPath: edges.Array.data[1].isActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1867387194}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1867387193}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RW.MonumentValley.Highlighter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RW.MonumentValley.DragSpinner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: EnableSpinner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970511120419662025, guid: b9b992cdfe68345c8a2a6f927e451714,
+        type: 3}
+      propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3970511120443866569, guid: b9b992cdfe68345c8a2a6f927e451714,
         type: 3}
@@ -3526,7 +3656,7 @@ PrefabInstance:
     - target: {fileID: 2423906599848667261, guid: 1a4ea91619c2c48b99dc4648f2819953,
         type: 3}
       propertyPath: offsetDistance
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a4ea91619c2c48b99dc4648f2819953, type: 3}

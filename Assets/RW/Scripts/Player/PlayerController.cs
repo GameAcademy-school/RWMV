@@ -196,6 +196,7 @@ namespace RW.MonumentValley
 
                     // invoke UnityEvent associated with next Node
                     targetNode.gameEvent.Invoke();
+                    //Debug.Log("invoked GameEvent from targetNode: " + targetNode.name);
                 }
 
                 // wait one frame
