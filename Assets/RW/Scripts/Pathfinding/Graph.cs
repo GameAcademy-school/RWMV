@@ -29,7 +29,6 @@
  */
 
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -46,7 +45,6 @@ namespace RW.MonumentValley
         [SerializeField] private Node goalNode;
         public Node GoalNode => goalNode;
 
-        // List of all Nodes 
         private void Awake()
         {
             allNodes = FindObjectsOfType<Node>().ToList();
@@ -89,8 +87,6 @@ namespace RW.MonumentValley
             }
             return closestNode;
         }
-
-
 
         // find the closest Node in the entire Graph
         public Node FindClosestNode(Vector3 pos)

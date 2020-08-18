@@ -33,7 +33,7 @@ using UnityEngine;
 
 namespace RW.MonumentValley
 {
-    // class to activate/deactivate special edges between Nodes based on rotation
+    // class to activate/deactivate special Edges between Nodes based on rotation
     [System.Serializable]
     public class RotationLink
     {
