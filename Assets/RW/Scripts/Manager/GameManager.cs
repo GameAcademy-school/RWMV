@@ -93,6 +93,7 @@ namespace RW.MonumentValley
             StartCoroutine(WinRoutine());
         }
 
+        // invoke end level event and wait
         private IEnumerator WinRoutine()
         {
             if (endLevelEvent != null)
@@ -102,6 +103,7 @@ namespace RW.MonumentValley
             yield return new WaitForSeconds(delayTime);
         }
 
+        // restart the scene
         public void Restart(float delay)
         {
             StartCoroutine(RestartRoutine(delay));
