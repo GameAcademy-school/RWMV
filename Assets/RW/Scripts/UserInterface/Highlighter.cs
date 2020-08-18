@@ -51,11 +51,11 @@ namespace RW.MonumentValley
         {
             isEnabled = true;
             // use non-highlighted material by default
-            EnableHighlight(false);
+            ToggleHighlight(false);
         }
 
         // toggle glow on or off using Shader Graph property
-        public void EnableHighlight(bool onOff)
+        public void ToggleHighlight(bool onOff)
         {
             foreach (MeshRenderer meshRenderer in meshRenderers)
             {
@@ -67,19 +67,19 @@ namespace RW.MonumentValley
         }
 
         // master toggle (off overrides highlight state)
-        public void Activate(bool state)
+        public void EnableHighlight(bool state)
         {
             isEnabled = state;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            EnableHighlight(isEnabled);
+            ToggleHighlight(isEnabled);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            EnableHighlight(false);
+            ToggleHighlight(false);
         }
     }
 }
