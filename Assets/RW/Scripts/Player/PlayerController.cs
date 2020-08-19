@@ -132,6 +132,12 @@ namespace RW.MonumentValley
             {
                 StartCoroutine(FollowPathRoutine(newPath));
             }
+            else
+            {
+                // otherwise, invalid path, stop movement
+                isMoving = false;
+                UpdateAnimation();
+            }
         }
 
 
