@@ -238,7 +238,7 @@ namespace RW.MonumentValley
             // plane at player's feet
             Plane plane = new Plane(Vector3.up, startPosition);
 
-            // distance from camera
+            // distance from camera (used for projecting point onto plane)
             float cameraDistance = 0f;
 
             // project the nextNode onto the plane and face toward projected point
@@ -266,7 +266,9 @@ namespace RW.MonumentValley
         public bool HasReachedNode(Node node)
         {
             if (pathfinder == null || graph == null || node == null)
+            {
                 return false;
+            }
 
             float distanceSqr = (node.transform.position - transform.position).sqrMagnitude;
 
@@ -276,6 +278,10 @@ namespace RW.MonumentValley
         // have we reached the end of the graph?
         public bool HasReachedGoal()
         {
+            if (graph == null)
+            {
+                return false;
+            }
             return HasReachedNode(graph.GoalNode);
         }
 
