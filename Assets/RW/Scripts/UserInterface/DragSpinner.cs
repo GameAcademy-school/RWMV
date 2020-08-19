@@ -98,48 +98,22 @@ namespace RW.MonumentValley
             EnableSpinner(true);
         }
 
-        //private void OnMouseDrag()
-        //{
-        //    // if clicked...
-        //    if (isSpinning && Camera.main != null && pivot != null && isActive)
-        //    {
-        //        // get the angle to the current mouse position
-        //        directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
-        //        angleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
-
-        //        // if we have dragged a minimum threshold, rotate the target to follow the mouse movements around the pivot
-        //        // (left-handed coordinate system; positive rotations are clockwise)
-        //        if (directionToMouse.magnitude > minDragDist)
-        //        {
-        //            Vector3 newRotationVector = (previousAngleToMouse - angleToMouse) * axisDirection;
-        //            targetToSpin.Rotate(newRotationVector);
-        //            previousAngleToMouse = angleToMouse;
-        //        }
-        //    }
-        //}
-
-        // begin spin 
-        //private void OnMouseDown()
-        //{
-        //    if (!isActive)
-        //        return;
-
-        //    isSpinning = true;
-        //    directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
-        //    previousAngleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
-        //}
-
         // begin spin drag
         public void OnBeginDrag(PointerEventData data)
         {
             if (!isActive)
+            {
                 return;
+            }
 
             isSpinning = true;
+
+            // get the angle to the mouse position on down frame
             Vector3 inputPosition = new Vector3(data.position.x, data.position.y, 0f);
             directionToMouse = inputPosition - Camera.main.WorldToScreenPoint(pivot.position);
+
+            // store the angle to mouse pointer on down frame
             previousAngleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
-            //Debug.Log("OnBeginDrag: " + data.position);
 
         }
 
@@ -147,28 +121,17 @@ namespace RW.MonumentValley
         public void OnEndDrag(PointerEventData data)
         {
             if (isActive)
+            {
                 SnapSpinner();
-            //Debug.Log("OnEndDrag: " + data.position);
+            }
         }
 
         public void OnDrag(PointerEventData data)
         {
-
-            //if (data.dragging)
-            //{
-            //    timeCount += Time.deltaTime;
-            //    if (timeCount > 0.1f)
-            //    {
-            //        Debug.Log("Dragging:" + data.position);
-            //        timeCount = 0.0f;
-            //    }
-            //}
-
             if (isSpinning && Camera.main != null && pivot != null && isActive)
             {
                 // get the angle to the current mouse position
                 Vector3 inputPosition = new Vector3(data.position.x, data.position.y, 0f);
-                //directionToMouse = Input.mousePosition - Camera.main.WorldToScreenPoint(pivot.position);
                 directionToMouse = inputPosition - Camera.main.WorldToScreenPoint(pivot.position);
                 angleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
 
@@ -183,7 +146,7 @@ namespace RW.MonumentValley
             }
         }
 
-
+        // release and snap to 90-degrees interval
         private void SnapSpinner()
         {
             isSpinning = false;
@@ -191,10 +154,11 @@ namespace RW.MonumentValley
             // snap to nearest 90-degree interval
             RoundToRightAngles(targetToSpin);
 
-            // invoke 
+            // invoke event (e.g. to update the SpinnerControl)
             if (snapEvent != null)
+            {
                 snapEvent.Invoke();
-
+            }
         }
 
         // round to nearest 90 degrees
@@ -207,6 +171,7 @@ namespace RW.MonumentValley
             xform.eulerAngles = new Vector3(roundedXAngle, roundedYAngle, roundedZAngle);
         }
 
+        //enable/disable
         public void EnableSpinner(bool state)
         {
             isActive = state;
