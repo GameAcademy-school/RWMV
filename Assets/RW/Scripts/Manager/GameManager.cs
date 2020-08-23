@@ -39,11 +39,14 @@ namespace RW.MonumentValley
     // monitors win condition and stops/pauses gameplay as needed
     public class GameManager : MonoBehaviour
     {
+        // reference to player's controller component
         private PlayerController playerController;
 
+        // have we completed the win condition (i.e. reached the goal)?
         private bool isGameOver;
         public bool IsGameOver => isGameOver;
 
+        // delay before restarting, etc.
         public float delayTime = 2f;
 
         // invoked on awake
@@ -59,9 +62,12 @@ namespace RW.MonumentValley
         private void Awake()
         {
             awakeEvent.Invoke();
+
+            // get a reference to the player
             playerController = FindObjectOfType<PlayerController>();
         }
 
+        // invoke any events at the start of gameplay
         private void Start()
         {
             initEvent.Invoke();

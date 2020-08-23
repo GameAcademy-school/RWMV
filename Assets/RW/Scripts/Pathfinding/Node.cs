@@ -49,18 +49,20 @@ namespace RW.MonumentValley
         // Nodes specifically excluded from Edges
         [SerializeField] private List<Node> excludedNodes;
 
+        // reference to the graph
+        private Graph graph;
+
+        // previous Node that forms a "breadcrumb" trail back to the start
+        private Node previousNode;
+
         // invoked when Player enters this node
         public UnityEvent gameEvent;
 
-
+        // properties
         public Node PreviousNode { get { return previousNode; } set { previousNode = value; } }
         public List<Edge> Edges => edges;
 
-        private Graph graph;
-        private Node previousNode;
-
-
-         //3d compass directions to check for horizontal neighbors automatically(east/west/north/south)
+        // 3d compass directions to check for horizontal neighbors automatically(east/west/north/south)
         public static Vector3[] neighborDirections =
         {
             new Vector3(1f, 0f, 0f),
@@ -76,22 +78,23 @@ namespace RW.MonumentValley
 
         private void Start()
         {
+            // automatic connect Edges with horizontal Nodes
             if (graph != null)
             {
                 FindNeighbors();
             }
         }
 
+        // draws a sphere gizmo
         private void OnDrawGizmos()
         {
-            // draws a sphere gizmo
             Gizmos.color = defaultGizmoColor;
             Gizmos.DrawSphere(transform.position, gizmoRadius);
         }
 
+        // draws a sphere gizmo in a different color when selected
         private void OnDrawGizmosSelected()
         {
-            // draws a sphere gizmo
             Gizmos.color = selectedGizmoColor;
             Gizmos.DrawSphere(transform.position, gizmoRadius);
 
@@ -106,7 +109,7 @@ namespace RW.MonumentValley
             }
         }
 
-         //fill out edge connections to neighboring nodes automatically
+        // fill out edge connections to neighboring nodes automatically
         private void FindNeighbors()
         {
 
@@ -124,7 +127,7 @@ namespace RW.MonumentValley
             }
         }
 
-         //is a Node already in Edges List?
+        // is a Node already in the Edges List?
         private bool HasNeighbor(Node node)
         {
             foreach (Edge e in edges)

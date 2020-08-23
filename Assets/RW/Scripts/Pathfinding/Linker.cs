@@ -37,7 +37,6 @@ namespace RW.MonumentValley
     [System.Serializable]
     public class RotationLink
     {
-
         // transform to check
         public Transform linkedTransform;
 
@@ -46,7 +45,6 @@ namespace RW.MonumentValley
         [Header("Nodes to activate")]
         public Node nodeA;
         public Node nodeB;
-
     }
 
     // activates or deactivates special Edges between Nodes
