@@ -72,6 +72,9 @@ MonoBehaviour:
   spinAxis: 0
   pivot: {fileID: 6374139949356371548}
   minDragDist: 10
+  snapEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6374139949356371494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +87,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba1b4ffe640f422b8829f5cc1d067f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRenderers:
-  - {fileID: 0}
+  meshRenderers: []
   highlightProperty: _IsHighlighted

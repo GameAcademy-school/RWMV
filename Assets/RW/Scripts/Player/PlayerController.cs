@@ -84,7 +84,8 @@ namespace RW.MonumentValley
             // always start on a Node
             SnapToNearestNode();
 
-            if (pathfinder != null)
+            // automatically set the Graph's StartNode 
+            if (pathfinder != null && !pathfinder.SearchOnStart)
             {
                 pathfinder.SetStartNode(transform.position);
             }

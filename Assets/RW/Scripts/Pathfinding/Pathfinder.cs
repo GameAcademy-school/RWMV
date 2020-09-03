@@ -68,6 +68,7 @@ namespace RW.MonumentValley
         public Node DestinationNode { get { return destinationNode; } set { destinationNode = value; } }
         public List<Node> PathNodes => pathNodes;
         public bool IsPathComplete => isPathComplete;
+        public bool SearchOnStart => searchOnStart;
 
         private void Awake()
         {
@@ -78,7 +79,7 @@ namespace RW.MonumentValley
         {
             if (searchOnStart)
             {
-                FindPath();
+                pathNodes = FindPath();
             }
         }
 
@@ -179,7 +180,6 @@ namespace RW.MonumentValley
                     if (frontierNodes.Contains(destinationNode))
                     {
                         // generate the Path to the goal
-                       // pathNodes = GetPathNodes();
                         newPath = GetPathNodes();
                         isSearchComplete = true;
                         isPathComplete = true;

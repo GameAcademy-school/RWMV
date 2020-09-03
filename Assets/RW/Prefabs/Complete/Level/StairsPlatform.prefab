@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 5233017715716265694}
   - component: {fileID: 5510223870711793319}
   m_Layer: 0
-  m_Name: Node (25)
+  m_Name: Node25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,7 +270,8 @@ MonoBehaviour:
   edges:
   - neighbor: {fileID: 5510223870209954639}
     isActive: 1
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264019781510581
@@ -284,7 +285,7 @@ GameObject:
   - component: {fileID: 5233017716218102582}
   - component: {fileID: 5510223870209954639}
   m_Layer: 0
-  m_Name: Node (StairRamp1)
+  m_Name: NodeStairRamp1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,12 +321,9 @@ MonoBehaviour:
   defaultGizmoColor: {r: 0, g: 0, b: 0, a: 1}
   selectedGizmoColor: {r: 0, g: 0, b: 1, a: 1}
   inactiveGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  edges:
-  - neighbor: {fileID: 5510223870711793319}
-    isActive: 1
-  - neighbor: {fileID: 5510223868868257907}
-    isActive: 1
-  playerEvent:
+  edges: []
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264020070323355
@@ -339,7 +337,7 @@ GameObject:
   - component: {fileID: 5233017716474425880}
   - component: {fileID: 5510223869995590241}
   m_Layer: 0
-  m_Name: Node (Landing)
+  m_Name: NodeLanding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,7 +378,8 @@ MonoBehaviour:
     isActive: 1
   - neighbor: {fileID: 5510223868813540051}
     isActive: 1
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264020275722536
@@ -394,7 +393,7 @@ GameObject:
   - component: {fileID: 5233017716529078187}
   - component: {fileID: 5510223869915762642}
   m_Layer: 0
-  m_Name: Node (22)
+  m_Name: Node22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,42 +429,11 @@ MonoBehaviour:
   defaultGizmoColor: {r: 0, g: 0, b: 0, a: 1}
   selectedGizmoColor: {r: 0, g: 0, b: 1, a: 1}
   inactiveGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  edges:
-  - neighbor: {fileID: 0}
-    isActive: 0
-  - neighbor: {fileID: 0}
-    isActive: 0
-  - neighbor: {fileID: 0}
-    isActive: 0
-  - neighbor: {fileID: 0}
-    isActive: 0
-  playerEvent:
+  edges: []
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DragSpinner, Assembly-CSharp
-        m_MethodName: EnableSpinner
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Highlighter, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &882264020562355144
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +445,7 @@ GameObject:
   - component: {fileID: 5233017716781401419}
   - component: {fileID: 5510223869629912370}
   m_Layer: 0
-  m_Name: Node (StairRamp3)
+  m_Name: NodeStairRamp3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,7 +486,8 @@ MonoBehaviour:
     isActive: 1
   - neighbor: {fileID: 5510223869995590241}
     isActive: 1
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264021088507834
@@ -532,7 +501,7 @@ GameObject:
   - component: {fileID: 5233017717328998713}
   - component: {fileID: 5510223869099106624}
   m_Layer: 0
-  m_Name: Node (23)
+  m_Name: Node23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,7 +538,8 @@ MonoBehaviour:
   selectedGizmoColor: {r: 0, g: 0, b: 1, a: 1}
   inactiveGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   edges: []
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264021126094473
@@ -583,7 +553,7 @@ GameObject:
   - component: {fileID: 5233017717568239626}
   - component: {fileID: 5510223868868257907}
   m_Layer: 0
-  m_Name: Node (StairRamp2)
+  m_Name: NodeStairRamp2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -624,7 +594,8 @@ MonoBehaviour:
     isActive: 1
   - neighbor: {fileID: 5510223869629912370}
     isActive: 1
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264021306379305
@@ -638,7 +609,7 @@ GameObject:
   - component: {fileID: 5233017717648124586}
   - component: {fileID: 5510223868813540051}
   m_Layer: 0
-  m_Name: Node (Goal)
+  m_Name: NodeGoal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -677,7 +648,8 @@ MonoBehaviour:
   edges:
   - neighbor: {fileID: 5510223869995590241}
     isActive: 1
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &882264021404166875
@@ -691,7 +663,7 @@ GameObject:
   - component: {fileID: 5233017717825064024}
   - component: {fileID: 5510223868594641953}
   m_Layer: 0
-  m_Name: Node (24)
+  m_Name: Node24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -728,7 +700,8 @@ MonoBehaviour:
   selectedGizmoColor: {r: 0, g: 0, b: 1, a: 1}
   inactiveGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   edges: []
-  playerEvent:
+  excludedNodes: []
+  gameEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2757243749991520008
@@ -1507,7 +1480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4125098053640251615}
   m_Layer: 0
-  m_Name: Stairs
+  m_Name: StairsPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

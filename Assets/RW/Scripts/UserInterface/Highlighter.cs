@@ -33,7 +33,6 @@ using UnityEngine.EventSystems;
 
 namespace RW.MonumentValley
 {
-    /**/
     [RequireComponent(typeof(Collider))]
     public class Highlighter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -75,11 +74,13 @@ namespace RW.MonumentValley
         public void OnPointerEnter(PointerEventData eventData)
         {
             ToggleHighlight(isEnabled);
+            Debug.Log("Pointer entered");
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             ToggleHighlight(false);
+            Debug.Log("Pointer exit");
         }
     }
 }
